@@ -45,50 +45,9 @@ function ChangeMaterialProperties() {
             continue;
         }
         mat.reflectionTexture = hdrTextureCity;
-        if(mat.name == "h_swoosh"){
-            mat.unlit = true
-            mat.opacityTexture = hair_alphaSwoosh
-        }
-        else if(mat.name == "c_swoosh"){
-            mat.unlit = true
-            mat.opacityTexture = coll_alphaSwoosh
-        }
-        else if(mat.name == "o_swoosh"){
-            mat.unlit = true
-            mat.opacityTexture = omg_alphaSwoosh
-        }
-        else if(mat.name == "d_swoosh"){
-            mat.unlit = true
-            mat.opacityTexture = daily_alphaSwoosh
-        }
-        else if(mat.name == "f_auge"){
-            mat.unlit = true
-            mat.opacityTexture = flatter_alphaAuge
-        }
-        else if(mat.name == "r_swoosh"){
-            mat.unlit = true
-            mat.opacityTexture = red_alphaSwoosh
-        }
-        else if(mat.name == "g_sun_vid"){
-            mat.unlit = true
-            mat.opacityTexture = glow_alphaSuns
-            mat.albedoTexture = glow_colorSuns
-        }
-        else if(mat.name == "inside glow"){
-            mat.roughness = 0.5
-            mat.bumpTexture.level = 0.75
-        }
-        else if(mat.name == "inside hair"){
-            mat.roughness = 0.5
-            mat.bumpTexture.level = 0.75
-        }
 
 
-        else if(mat.name.startsWith('_',1)){
-            //mat.unlit = true
-        }
-
-        else if (mat.name == "Floor Gel AO") {
+        if (mat.name == "Floor Gel AO") {
             mat.opacityTexture = mat.albedoTexture;
             mat.opacityTexture .getAlphaFromRGB = true
             mat.albedoTexture = ""
@@ -120,16 +79,24 @@ function ChangeMaterialProperties() {
             mat.roughness = 0;
             mat.metallic = 0.6
         }
-        else if(mat.name.startsWith("Glossy") ){
-            mat.metallic = 0;
+        else if(mat.name == '2_Gel_chamlon_Lable') {
+            mat.metallic = 1;
             mat.metallicF0Factor = 0.1
-            mat.roughness = 0.1
+            mat.roughness = 1
 
         }
-        else if(mat.name == "omg Label"){
-            mat.albedoTexture = omgMipMap
+        else if(mat.name == '3_Gel_chamlon_Lable') {
+            mat.metallic = 0.3;
+            mat.metallicF0Factor = 0.1
+            mat.roughness = 0.25
+        }
+        else if(mat.name == '1_Gel_chamlon_Lable') {
+            mat.metallic = 0.3;
+            mat.metallicF0Factor = 0.1
+            mat.roughness = 0.25
 
         }
+        
 
     }
 
