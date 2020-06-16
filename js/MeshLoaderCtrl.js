@@ -1,4 +1,4 @@
-var Hum_P
+var Packs_P
 var hdrTextureCity, hdrSkyboxMaterial, hdrSkybox,  CityEnvTask
 let PacksList = [] 
 let AnimsList = []
@@ -35,7 +35,7 @@ function LoadAssets(scene, assetsManager) {
     }
 
 
-    Hum_P = new BABYLON.TransformNode("Hum_P");
+    Packs_P = new BABYLON.TransformNode("Packs_P");
     HumLoaderTask = assetsManager.addMeshTask("", "", "./assets/3_FakeProducts_0002_JB.glb")
 
     HumLoaderTask.onSuccess = function (task) {
@@ -46,7 +46,7 @@ function LoadAssets(scene, assetsManager) {
         task.loadedMeshes[0].rotationQuaternion = null;
         task.loadedMeshes[0].rotation.y = 90 * (Math.PI / 180)
         task.loadedMeshes[0].scaling = new BABYLON.Vector3(1,1, 1)
-        task.loadedMeshes[0].parent = Hum_P
+        task.loadedMeshes[0].parent = Packs_P
 
         /*
         task.loadedMeshes[0]._children[1].getChildTransformNodes(true).forEach(elem => {
@@ -81,24 +81,12 @@ function LoadAssets(scene, assetsManager) {
 
 
     //FINISH
-
-    var pbr
     assetsManager.onFinish = function (task) {
-        CreateParticlesHolder()
-        CreateParticleTextures()
 
         ChangeMaterialProperties()
-        EditMeshes()
-        CreateLighting()
+        EditMeshesPSR()
         AnimateReveal()
-
-        //anim stuff
-        
-
-        //CreateCustomMaterials()
-        //SpawnHotspots()
-        //CreateLighting()
-        //BufferMachineAnimation()
+        //AddGlow()
 
     }
     //Asset Manager check
