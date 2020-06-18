@@ -114,9 +114,9 @@ function ShowSelectedAnim(i) {
     //Turn root_node ON
     for (let k = 0; k < AnimsList.length; k++) {
         if (i == k) {
-            window.setTimeout(()=>{
+            window.setTimeout(() => {
                 AnimsList[k].setEnabled(true)
-            }, ChangeTime*1000)
+            }, ChangeTime * 1000)
 
         }
         else {
@@ -134,7 +134,7 @@ function ShowSelectedAnim(i) {
         }
     })
 
-    window.setTimeout(()=>{
+    window.setTimeout(() => {
         var c = 0
         grafikAnim = gsap.timeline()
         AnimsList[i].getChildTransformNodes(true).forEach(elem => {
@@ -145,10 +145,10 @@ function ShowSelectedAnim(i) {
                     elem.getChildMeshes(true)[0].material.albedoTexture.video.play();
                 }
             }
-    
+
             //set initial scaling
             elem.scaling = new BABYLON.Vector3(0, 0, 0)
-    
+
             //animate scaling
             if (c == 0)
                 grafikAnim.to(elem.scaling, { x: 1, y: 1, z: 1, ease: "back.out(4)", duration: 0.5 })
@@ -156,19 +156,19 @@ function ShowSelectedAnim(i) {
                 grafikAnim.to(elem.scaling, { x: 1, y: 1, z: 1, delay: 0.6, ease: "back.out(4)", duration: 0.5 }, "<0.2")
             else
                 grafikAnim.to(elem.scaling, { x: 1, y: 1, z: 1, ease: "back.out(4)", duration: 0.5 }, "<0.2")
-    
-    
+
+
             //play backwards
             window.setTimeout(() => {
                 grafikAnim.to(elem.scaling, { x: 0, y: 0, z: 0, ease: "back.inOut(4)", duration: 1.25 }, "<0.1")
             }, 3000)
-    
-            c++
-    
-        });
-    
 
-    }, ChangeTime*1000)
+            c++
+
+        });
+
+
+    }, ChangeTime * 1000)
 
     //scale On rest of elements
     //play ANim backwards
@@ -184,19 +184,18 @@ function EndAnimation() {
 
 //PARTICLES
 var emitterSelection, selectParticles
-function CreateParticlesHolder(){
+function CreateParticlesHolder() {
     emitterSelection = BABYLON.Mesh.CreateBox("emitterSelection", 0.1, scene);
     emitterSelection.isVisible = false
     emitterSelection.position.y = 1.4
-    
 }
 function createWinParticles(selec, pos) {
-    emitterSelection.position.x = pos.x-0.8
+    emitterSelection.position.x = pos.x - 0.8
     emitterSelection.position.z = pos.z
 
     selectParticles = new BABYLON.ParticleSystem("rain", 10, scene);
     selectParticles.particleTexture = PartTexts[selec]
-        
+
     // Particles
     selectParticles.minAngularSpeed = -2;
     selectParticles.maxAngularSpeed = 2;
@@ -216,4 +215,65 @@ function createWinParticles(selec, pos) {
     //selectParticles.disposeOnStop = true
     selectParticles.start()
 
+}
+
+function CreateSwooshHolder() {
+    swoosh_P = new BABYLON.TransformNode('swoosh_P', scene)
+
+    swooshHolder = BABYLON.Mesh.CreateBox("swooshHolder", 0.1, scene);
+    swooshHolder.isVisible = false
+    swooshHolder.position.x = 0.25
+    swooshHolder.position.y = 2.125
+    swooshHolder.position.z = 0
+    swooshHolder.parent = swoosh_P
+
+
+    swooshMatPH = new BABYLON.PBRMaterial('swooshMatPH', scene)
+    swooshMatPH.albedoColor = new BABYLON.Color3.FromHexString("#000000")
+
+    swooshHolder.material = swooshMatPH
+
+    // Create a particle system
+    var ps = new BABYLON.ParticleSystem("ps", 10000, scene);
+
+    //Texture of each particle
+    ps.particleTexture = new BABYLON.Texture("assets/flare.png", scene);
+
+    // Where the particles come from
+   
+    ps.minAngularSpeed = -0.5;
+    ps.maxAngularSpeed = 0.5;
+    ps.minSize = 0.005;
+    ps.maxSize = 0.01;
+    ps.minLifeTime = 0.5;
+    ps.maxLifeTime = 2.0;
+    ps.minEmitPower = 0.1;
+    ps.maxEmitPower = 0.5;
+    ps.emitter = swooshHolder
+    var direction1 = new BABYLON.Vector3(1, -1, -1);
+    var direction2 = new BABYLON.Vector3(1, 1, 1);
+    ps.createDirectedSphereEmitter(0.05, direction1, direction2);
+    ps.emitRate = 10000;
+    ps.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE
+
+
+    ps.color1 = new BABYLON.Color3(197 / 255, 205 / 255, 204 / 255);//nagels rot
+    //particleSystem.color1 = new BABYLON.Color3(211/255, 211/255, 211/255);//silver
+    ps.color2 = new BABYLON.Color3(81 / 255, 100 / 255, 81 / 255); //light gold
+    //particleSystem.color2 = new BABYLON.Color3(218/255, 165/255, 32/255); //hard gold
+    ps.gravity = new BABYLON.Vector3(0, 0, 0);
+    //velocity at birth
+    ps.addVelocityGradient(0, 0.5, 0.8);
+    //velocity reached at dead
+    ps.addVelocityGradient(1.0, 3, 4);
+
+    // Start the particle system
+    ps.start();
+}
+
+var swooshAnim = gsap.timeline({ paused: true })
+
+function triggerSwooshUp() {
+    swooshAnim.fromTo(swoosh_P.rotation, { y: 0 }, { y: 360 * (Math.PI / 180), duration: 3 })
+    swooshAnim.fromTo(swoosh_P.position, { y: 0 }, { y: 2, duration: 3 }, "<")
 }

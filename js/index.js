@@ -21,7 +21,7 @@ var createScene = function () {
     CreateLighting()
     CreateParticlesHolder()
     CreateParticleTextures()
-
+    
 
     //var vrHelper = scene.createDefaultVRExperience({createDeviceOrientationCamera:false});
     SetPointerManager(scene)

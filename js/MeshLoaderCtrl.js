@@ -82,10 +82,11 @@ function LoadAssets(scene, assetsManager) {
 
     //FINISH
     assetsManager.onFinish = function (task) {
-
+        //CreateSwooshHolder()
         ChangeMaterialProperties()
         EditMeshesPSR()
         AnimateReveal()
+        //triggerSwooshUp()
         //AddGlow()
 
     }

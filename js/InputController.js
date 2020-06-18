@@ -5,7 +5,7 @@ $(document).keyup(function (e) {
     //if keypress "i"
 
     if (e.keyCode === 73) {
-        RevealAnim.restart()
+        swooshAnim.restart()
     }
     if (e.keyCode === 79) {
         //MuteVideoStreaming();
@@ -51,7 +51,7 @@ function CallPackPositionChange(pickInfo) {
 
     //Animate
     ChangeFocusPack(CurrentSelection)
-    ShowSelectedAnim(CurrentSelection)
+    //ShowSelectedAnim(CurrentSelection)
     switch (CurrentSelection) {
         case "0":
             break;
